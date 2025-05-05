@@ -1,0 +1,10 @@
+# Environnement virtuel
+venv/
+
+# Caches Python
+__pycache__/
+*.py[cod]
+
+# Bases de données SQLite
+app.db
+instance/app.db

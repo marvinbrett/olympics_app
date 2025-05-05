@@ -1,0 +1,23 @@
+<!-- templates/payment.html -->
+{% extends 'base.html' %}
+{% block title %}Paiement – JO France{% endblock %}
+{% block content %}
+  <h2>Paiement de votre commande</h2>
+  <ul class="list-group mb-3">
+    {% for ci in cart_items %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ ci.offer.name }} (x{{ ci.quantity }})
+        <span>€{{ ci.offer.price * ci.quantity }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+  <h4>Total : €{{ total }}</h4>
+  <form method="post">
+    <div class="mb-3">
+      <label for="cardNumber" class="form-label">Numéro de carte (mock)</label>
+      <input type="text" class="form-control" id="cardNumber" name="card_number" placeholder="4111 1111 1111 1111" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Payer</button>
+    <a href="{{ url_for('cart') }}" class="btn btn-link">Retour au panier</a>
+  </form>
+{% endblock %}

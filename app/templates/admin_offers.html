@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Gestion des offres</h2>
+<ul>
+  {% for offer in offers %}
+    <li>{{ offer.name }} - €{{ offer.price }} - places: {{ offer.capacity }}</li>
+  {% endfor %}
+</ul>
+<h3>Ajouter une offre</h3>
+<form method="post">
+  Nom: <input name="name"><br>
+  Prix: <input name="price"><br>
+  Capacité: <input name="capacity"><br>
+  <input type="submit" value="Ajouter">
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Ventes par offre</h2>
+<ul>
+  {% for name, count in sales %}
+    <li>{{ name }} : {{ count }} ventes</li>
+  {% endfor %}
+</ul>
+{% endblock %}

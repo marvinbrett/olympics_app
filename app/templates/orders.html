@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Mes commandes – JO France{% endblock %}
+{% block content %}
+  <h2 class="mb-4">Mes commandes</h2>
+
+  {% if orders %}
+    <div class="row">
+      {% for o in orders %}
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ o.offer_name }}</h5>
+              <img src="data:image/png;base64,{{ o.qr_data }}" class="img-fluid" alt="QR Code pour {{ o.offer_name }}">
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info">
+      Vous n’avez encore passé aucune commande.
+    </div>
+  {% endif %}
+{% endblock %}
