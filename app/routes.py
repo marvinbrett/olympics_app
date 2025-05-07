@@ -29,7 +29,8 @@ def admin_required(f):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    featured = Offer.query.limit(3).all()
+    return render_template('index.html', featured=featured)
 
 
 @app.route('/api/offers')
@@ -286,3 +287,5 @@ def inject_cart():
     else:
         cart_offers, cart_count = [], 0
     return dict(cart_offers=cart_offers, cart_count=cart_count)
+
+from .models import Offer
