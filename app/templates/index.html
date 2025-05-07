@@ -1,5 +1,22 @@
 {% extends 'base.html' %}
+
+{# 1) On surcharge le bloc hero, juste après la navbar #}
+{% block hero %}
+<section class="hero text-center text-white d-flex align-items-center"
+         style="height: 60vh;
+                background: url('{{ url_for('static', filename='img/jo_img.jpg') }}') no-repeat center/cover;">
+  <div class="container">
+    <h1 class="display-3 fw-bold">Bienvenue aux Jeux olympiques France</h1>
+    <p class="lead mb-4">Découvrez les épreuves et réservez vos tickets dès maintenant.</p>
+    <a href="{{ url_for('offers') }}" class="btn btn-lg btn-primary">Voir les offres</a>
+  </div>
+</section>
+{% endblock %}
+
+{# 2) Puis on conserve ou on complète le contenu principal #}
 {% block content %}
-<h1>Bienvenue aux Jeux olympiques France</h1>
-<p>Découvrez les épreuves et réservez vos tickets dès maintenant.</p>
+  <div class="mt-5">
+    <h2>À la une</h2>
+    <p>Choisissez l’épreuve qui vous passionne et réservez vite votre place !</p>
+  </div>
 {% endblock %}

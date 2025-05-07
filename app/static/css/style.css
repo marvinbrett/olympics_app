@@ -1,0 +1,93 @@
+/* Style global pour JO France */
+
+/* Palette de couleurs */
+:root {
+  --primary-color: #002664;    /* Bleu foncé JO */
+  --secondary-color: #ffcd00;  /* Jaune or JO */
+  --bg-light: #f8f9fa;
+  --text-dark: #212529;
+}
+
+/* Corps de page */
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: var(--primary-color) !important;
+}
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: #fff !important;
+}
+.navbar .nav-link:hover {
+  color: var(--secondary-color) !important;
+}
+
+/* Footer */
+footer {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Hero section */
+.hero {
+  background: url('../images/hero-bg.jpg') center/cover no-repeat;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.hero h1 {
+  font-size: 3rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Cart badge */
+.badge-cart {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* Cards offres */
+.card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.card-title {
+  font-weight: 600;
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: #001f4d;
+  border-color: #001f4d;
+}
+
+/* Offcanvas panier */
+.offcanvas-header {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Tables commandes */
+table {
+  margin-top: 1rem;
+}
+table th {
+  background-color: var(--primary-color);
+  color: #fff;
+}
