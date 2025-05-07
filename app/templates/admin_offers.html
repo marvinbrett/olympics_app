@@ -1,16 +1,45 @@
 {% extends 'base.html' %}
+
+{% block title %}Gérer les offres – JO France{% endblock %}
+
 {% block content %}
-<h2>Gestion des offres</h2>
-<ul>
-  {% for offer in offers %}
-    <li>{{ offer.name }} - €{{ offer.price }} - places: {{ offer.capacity }}</li>
-  {% endfor %}
-</ul>
-<h3>Ajouter une offre</h3>
-<form method="post">
-  Nom: <input name="name"><br>
-  Prix: <input name="price"><br>
-  Capacité: <input name="capacity"><br>
-  <input type="submit" value="Ajouter">
-</form>
+  <h2>Gestion des offres</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Prix (€)</th>
+        <th>Capacité</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for offer in offers %}
+        <tr>
+          <td>{{ offer.name }}</td>
+          <td>{{ offer.price }}</td>
+          <td>{{ offer.capacity }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Ajouter une offre</h3>
+  <form method="post" class="row g-3">
+    <div class="col-md-4">
+      <label for="name" class="form-label">Nom</label>
+      <input id="name" name="name" class="form-control" required>
+    </div>
+    <div class="col-md-4">
+      <label for="price" class="form-label">Prix (€)</label>
+      <input id="price" name="price" type="number" class="form-control" required>
+    </div>
+    <div class="col-md-4">
+      <label for="capacity" class="form-label">Capacité</label>
+      <input id="capacity" name="capacity" type="number" class="form-control" required>
+    </div>
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Ajouter</button>
+    </div>
+  </form>
 {% endblock %}

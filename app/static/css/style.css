@@ -1,5 +1,3 @@
-/* Style global pour JO France */
-
 /* Palette de couleurs */
 :root {
   --primary-color: #002664;    /* Bleu foncé JO */
@@ -36,6 +34,13 @@ footer {
   padding: 1rem 0;
   text-align: center;
   margin-top: 2rem;
+}
+
+footer h5 {
+  font-weight: 600;
+}
+footer a:hover {
+  text-decoration: underline;
 }
 
 /* Hero section */
@@ -91,3 +96,5 @@ table th {
   background-color: var(--primary-color);
   color: #fff;
 }
+
+

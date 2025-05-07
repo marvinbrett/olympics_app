@@ -2,6 +2,7 @@ import uuid
 import io
 import base64
 import qrcode
+import json
 from functools import wraps
 from flask import (
     render_template, flash, redirect, url_for,
@@ -12,7 +13,7 @@ from flask_login import (
     login_required
 )
 from urllib.parse import urlparse as url_parse
-
+from sqlalchemy import func
 from . import app, db
 from .models import User, Offer, Order, CartItem
 
@@ -127,6 +128,7 @@ def checkout():
         order = Order(
             user_id=user.id,
             offer_id=ci.offer.id,
+            quantity=ci.quantity,
             order_key=item_key,
             final_key=f"{user.key}{item_key}"
         )
@@ -247,12 +249,18 @@ def admin_offers():
 @admin_required
 def admin_sales():
     sales = (
-        db.session.query(Offer.name, db.func.count(Order.id))
-        .join(Order)
-        .group_by(Offer.name)
-        .all()
+        db.session
+          .query(Offer.name, func.sum(Order.quantity).label('places_vendues'))
+          .join(Order)
+          .group_by(Offer.name)
+          .all()
     )
-    return render_template('admin_sales.html', sales=sales)
+    labels = [name for name, _ in sales]
+    data   = [int(count or 0) for _, count in sales]
+    return render_template('admin_sales.html',
+        labels=json.dumps(labels),
+        data=json.dumps(data)
+    )
 
 
 @app.route('/admin/users')
