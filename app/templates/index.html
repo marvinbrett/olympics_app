@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{# 1) On surcharge le bloc hero, juste après la navbar #}
+{% block hero %}
+<section class="hero text-center text-white d-flex align-items-center"
+         style="height: 60vh;
+                background: url('{{ url_for('static', filename='img/jo_img.jpg') }}') no-repeat center/cover;">
+  <div class="container">
+    <h1 class="display-3 fw-bold">Bienvenue aux Jeux olympiques France</h1>
+    <p class="lead mb-4">Découvrez les épreuves et réservez vos tickets dès maintenant.</p>
+    <a href="{{ url_for('shop.offers') }}" class="btn btn-lg btn-primary">Voir les offres</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+  <section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="mb-4">À la une</h2>
+      <div class="row">
+        {% for offer in featured %}
+          <div class="col-md-4 mb-3">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ offer.name }}</h5>
+                <p class="card-text mb-4">€{{ offer.price }}</p>
+                <a href="{{ url_for('shop.offers') }}" class="mt-auto btn btn-primary">
+                  Je découvre
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

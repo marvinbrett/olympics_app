@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Votre Panier – JO France{% endblock %}
+{% block content %}
+  <h2>Votre Panier ({{ cart_count }})</h2>
+
+  {% if cart_items %}
+    <ul class="list-group">
+      {% for ci in cart_items %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ ci.offer.name }} – €{{ ci.offer.price }}
+          {% if ci.quantity > 1 %}× {{ ci.quantity }}{% endif %}
+          <button class="btn btn-sm btn-outline-danger remove-from-cart"
+                  data-offer-id="{{ ci.offer.id }}">
+            &times;
+          </button>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{{ url_for('shop.checkout') }}" class="btn btn-success mt-3">Valider la commande</a>
+  {% else %}
+    <p>Votre panier est vide.</p>
+  {% endif %}
+{% endblock %}

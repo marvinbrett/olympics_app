@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body { font-family: Arial, sans-serif; color: #333; }
+      .ticket { border: 1px solid #ddd; padding: 1em; margin-bottom: 1em; }
+      .ticket h3 { margin-top: 0; }
+      .qr { text-align: center; margin-top: 0.5em; }
+    </style>
+  </head>
+  <body>
+    <h2>Merci pour votre commande sur JO France !</h2>
+    <p>Voici le détail de vos billets :</p>
+    {% for o in orders %}
+      <div class="ticket">
+        <h3>{{ o.offer_name }}</h3>
+        <div class="qr">
+          <img src="data:image/png;base64,{{ o.qr_data }}" alt="QR Code {{ o.offer_name }}">
+        </div>
+      </div>
+    {% endfor %}
+    <p>Vous pouvez présenter ces QR Codes à l’entrée le jour J. Bonne visite !</p>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+# environnement virtuel
+venv/
+
+# caches, compilés
+__pycache__/
+*.py[cod]
+
+# bases SQLite
+*.db
+*.sqlite3
+
+# secrets
+.env
+
+# métadonnées macOS
+.DS_Store
