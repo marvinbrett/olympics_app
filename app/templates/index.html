@@ -8,7 +8,7 @@
   <div class="container">
     <h1 class="display-3 fw-bold">Bienvenue aux Jeux olympiques France</h1>
     <p class="lead mb-4">Découvrez les épreuves et réservez vos tickets dès maintenant.</p>
-    <a href="{{ url_for('offers') }}" class="btn btn-lg btn-primary">Voir les offres</a>
+    <a href="{{ url_for('shop.offers') }}" class="btn btn-lg btn-primary">Voir les offres</a>
   </div>
 </section>
 {% endblock %}
@@ -24,7 +24,7 @@
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ offer.name }}</h5>
                 <p class="card-text mb-4">€{{ offer.price }}</p>
-                <a href="{{ url_for('offers') }}" class="mt-auto btn btn-primary">
+                <a href="{{ url_for('shop.offers') }}" class="mt-auto btn btn-primary">
                   Je découvre
                 </a>
               </div>

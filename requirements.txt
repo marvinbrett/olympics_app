@@ -5,3 +5,5 @@ qrcode
 Pillow
 gunicorn
 pytest
+Flask-Migrate
+python-dotenv

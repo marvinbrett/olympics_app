@@ -16,7 +16,7 @@
         </li>
       {% endfor %}
     </ul>
-    <a href="{{ url_for('checkout') }}" class="btn btn-success mt-3">Valider la commande</a>
+    <a href="{{ url_for('shop.checkout') }}" class="btn btn-success mt-3">Valider la commande</a>
   {% else %}
     <p>Votre panier est vide.</p>
   {% endif %}
