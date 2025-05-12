@@ -1,29 +1,31 @@
 {% extends 'base.html' %}
-
 {% block title %}Connexion – JO France{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-6 col-lg-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title mb-4 text-center">Connexion</h2>
-        <form method="post" action="{{ url_for('auth.login') }}">
-          <div class="mb-3">
-            <label for="username" class="form-label">Nom d’utilisateur</label>
-            <input type="text" id="username" name="username" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" id="password" name="password" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-        </form>
-        <p class="text-center mt-3">
-          Pas encore de compte ? <a href="{{ url_for('auth.register') }}">Inscrivez-vous</a>
-        </p>
-      </div>
+  <h2>Connexion</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control", placeholder="Nom d’utilisateur") }}
+      {% for err in form.username.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
     </div>
-  </div>
-</div>
+
+    <div class="mb-3">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control", placeholder="Mot de passe") }}
+      {% for err in form.password.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+
+  <p class="mt-3">
+    Pas encore de compte ? <a href="{{ url_for('auth.register') }}">Inscrivez-vous</a>.
+  </p>
 {% endblock %}

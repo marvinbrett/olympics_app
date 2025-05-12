@@ -7,7 +7,7 @@ from sqlalchemy import func
 import json
 from . import bp
 from functools import wraps
-
+from app.forms import OfferForm
 
 def admin_required(f):
     @wraps(f)
@@ -22,15 +22,19 @@ def admin_required(f):
 @bp.route('/offers', methods=['GET', 'POST'])
 @admin_required
 def admin_offers():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        price = int(request.form.get('price', 0))
-        capacity = int(request.form.get('capacity', 0))
-        db.session.add(Offer(name=name, price=price, capacity=capacity))
+    form = OfferForm()
+    if form.validate_on_submit():
+        o = Offer(
+            name = form.name.data,
+            price = form.price.data,
+            capacity = form.capacity.data
+        )
+        db.session.add( o )
         db.session.commit()
-        return redirect(url_for('admin.admin_offers'))
+        flash( 'Offre ajoutée avec succès.', 'success' )
+        return redirect( url_for( 'admin.admin_offers' ) )
     offers = Offer.query.all()
-    return render_template('admin_offers.html', offers=offers)
+    return render_template( 'admin_offers.html', offers=offers, form=form )
 
 
 @bp.route('/sales')
@@ -48,7 +52,7 @@ def admin_sales():
     return render_template(
         'admin_sales.html',
         labels=json.dumps(labels),
-        data=json.dumps(data)
+        counts=json.dumps(data)  # Corrigé : correspond au template qui attend 'counts'
     )
 
 

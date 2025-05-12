@@ -1,33 +1,47 @@
 {% extends 'base.html' %}
-
 {% block title %}Inscription – JO France{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-md-6 col-lg-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="card-title mb-4 text-center">Inscription</h2>
-        <form method="post"action="{{ url_for('auth.register') }}">
-          <div class="mb-3">
-            <label for="username" class="form-label">Nom d’utilisateur</label>
-            <input type="text" id="username" name="username" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Adresse e-mail</label>
-            <input type="email" id="email" name="email" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label">Mot de passe</label>
-            <input type="password" id="password" name="password" class="form-control" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">S’inscrire</button>
-        </form>
-        <p class="text-center mt-3">
-          Déjà un compte ? <a href="{{ url_for('auth.login') }}">Connectez-vous</a>
-        </p>
-      </div>
+  <h2>Inscription</h2>
+  <form method="post">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+      {{ form.username.label(class="form-label") }}
+      {{ form.username(class="form-control", placeholder="Votre nom d’utilisateur") }}
+      {% for err in form.username.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
     </div>
-  </div>
-</div>
+
+    <div class="mb-3">
+      {{ form.email.label(class="form-label") }}
+      {{ form.email(class="form-control", placeholder="Votre email") }}
+      {% for err in form.email.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password.label(class="form-label") }}
+      {{ form.password(class="form-control", placeholder="Mot de passe") }}
+      {% for err in form.password.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="mb-3">
+      {{ form.password2.label(class="form-label") }}
+      {{ form.password2(class="form-control", placeholder="Confirmez le mot de passe") }}
+      {% for err in form.password2.errors %}
+        <div class="form-text text-danger">{{ err }}</div>
+      {% endfor %}
+    </div>
+
+    {{ form.submit(class="btn btn-primary") }}
+  </form>
+
+  <p class="mt-3">
+    Déjà un compte ? <a href="{{ url_for('auth.login') }}">Connectez-vous</a>.
+  </p>
 {% endblock %}

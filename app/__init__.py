@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from config import Config
+from flask_wtf import CSRFProtect
+
 
 # Création et configuration de l'application
 app = Flask(__name__, instance_relative_config=True)
@@ -16,7 +18,13 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'auth.login'
 
-# Enregistrement des blueprints
+from app.models import User
+@login.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+csrf = CSRFProtect(app)
+
 from app.shop.routes import bp as shop_bp
 app.register_blueprint(shop_bp)
 
@@ -26,5 +34,4 @@ app.register_blueprint(auth_bp)
 from app.admin.routes import bp as admin_bp
 app.register_blueprint(admin_bp, url_prefix='/admin')
 
-# Charge les modèles pour être sûr qu'ils sont connus par SQLAlchemy
 from app import models
