@@ -27,6 +27,7 @@ csrf = CSRFProtect(app)
 
 from app.shop.routes import bp as shop_bp
 app.register_blueprint(shop_bp)
+csrf.exempt(shop_bp)
 
 from app.auth.routes import bp as auth_bp
 app.register_blueprint(auth_bp)
