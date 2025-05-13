@@ -12,6 +12,13 @@ from app.models import User
 
 @pytest.fixture
 def app():
+    # on bascule en mode TESTING, DB en mémoire, CSRF désactivé, et on définit SECRET_KEY
+    flask_app.config.update({
+        'TESTING': True,
+        'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:',
+        'WTF_CSRF_ENABLED': False,
+        'SECRET_KEY': 'tests-secret-key'
+    })
     with flask_app.app_context():
         db.create_all()
         yield flask_app
@@ -43,5 +50,5 @@ def login_admin(client, app):
         db.session.add(u)
         db.session.commit()
     return client.post('/login',
-                       data={'username':'admin', 'password':'MotDePasseSécurisé'},
+                       data={'username': 'admin', 'password': 'MotDePasseSécurisé'},
                        follow_redirects=True)
