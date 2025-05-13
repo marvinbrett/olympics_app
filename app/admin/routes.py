@@ -39,14 +39,24 @@ def admin_offers():
 @bp.route('/sales')
 @admin_required
 def admin_sales():
-    # Récupère le nombre de ventes par offre
     sales = (
-        db.session.query(Offer.name, db.func.count(Order.id))
+        db.session.query(
+            Offer.name,
+            db.func.sum( Order.quantity ).label( 'tickets_sold' )
+        )
         .join(Order)
-        .group_by(Offer.id)
+        .group_by( Offer.id )
         .all()
     )
-    return render_template('admin_sales.html', sales=sales)
+
+    labels = [name for name, count in sales]
+    data = [count for name, count in sales]
+    return render_template(
+        'admin_sales.html',
+        sales=sales,
+        labels = labels,
+        data = data
+    )
 
 @bp.route('/users')
 @admin_required
