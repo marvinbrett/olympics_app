@@ -7,8 +7,12 @@ class BaseConfig:
     Configuration de base, utilise les variables d'environnement avec des valeurs par défaut.
     """
     SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key')
-    SQLALCHEMY_DATABASE_URI = (
-        os.environ.get('DATABASE_URL') or
+    # Récupère et adapte l'URL de la base de données
+    _db_url = os.environ.get('DATABASE_URL')
+    if _db_url and _db_url.startswith('postgres://'):
+        # Remplace 'postgres://' obsolète par 'postgresql://'
+        _db_url = _db_url.replace('postgres://', 'postgresql://', 1)
+    SQLALCHEMY_DATABASE_URI = _db_url or (
         'sqlite:///' + os.path.join(basedir, 'instance', 'app.db')
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
