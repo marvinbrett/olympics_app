@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return li;
   }
 
-  // AJOUT AU PANIER
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', async () => {
       const offerId = parseInt(btn.dataset.offerId, 10);
@@ -27,14 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok) throw new Error('Erreur réseau');
         const data = await res.json();
 
-        // 1) Met à jour le badge
         badge.textContent = data.cart_count;
 
-        // 2) Supprime le placeholder "Panier vide" s’il existe
         const placeholder = offcanvasList.querySelector('li.text-muted');
         if (placeholder) placeholder.remove();
 
-        // 3) Récupère nom + prix et ajoute la nouvelle ligne
         const cardBody = btn.closest('.card-body');
         const name = cardBody.querySelector('.card-title').textContent;
         const priceMatch = cardBody.querySelector('.card-text').textContent.match(/€(\d+)/);
@@ -65,14 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('Erreur réseau');
       const data = await res.json();
 
-      // 1) Met à jour le badge
       badge.textContent = data.cart_count;
 
-      // 2) Retire l’élément du DOM
       const li = btn.closest('li');
       if (li) li.remove();
 
-      // 3) Si plus aucun item, ré-affiche "Panier vide"
       if (data.cart_count === 0) {
         const emptyLi = document.createElement('li');
         emptyLi.className = 'list-group-item text-muted';

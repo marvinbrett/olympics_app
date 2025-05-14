@@ -1,4 +1,3 @@
-# app/forms.py
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FloatField, IntegerField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
@@ -26,10 +25,6 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("S'inscrire")
 
     def validate(self, extra_validators=None):
-        """
-        Étend la validation pour remplir password2 automatiquement si non fourni.
-        Utile notamment pour les tests unitaires qui n'envoient pas password2.
-        """
         # Si le champ password2 est vide, on le copie depuis password
         if not self.password2.data:
             self.password2.data = self.password.data
@@ -64,4 +59,4 @@ class OfferForm(FlaskForm):
 
 class EmptyForm(FlaskForm):
     """Formulaire vide juste pour le CSRF."""
-    submit = SubmitField()  # WTForms exige au moins un field
+    submit = SubmitField()

@@ -1,17 +1,17 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from config import Config
+from config import config as config_dict  # dict des classes de config
 from flask_wtf import CSRFProtect
 
-
-# Création et configuration de l'application
 app = Flask(__name__, instance_relative_config=True)
-app.config.from_object(Config)
-app.config.from_pyfile('config.py', silent=True)
+# Chargement dynamique de la configuration selon FLASK_ENV
+env = os.getenv('FLASK_ENV', 'default')
+app.config.from_object(config_dict.get(env, config_dict['default']))
 
-# Extensions
+# Initialisation des extensions
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -25,6 +25,7 @@ def load_user(user_id):
 
 csrf = CSRFProtect(app)
 
+# Enregistrement des blueprints
 from app.shop.routes import bp as shop_bp
 app.register_blueprint(shop_bp)
 csrf.exempt(shop_bp)

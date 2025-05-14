@@ -1,4 +1,3 @@
-# app/shop/routes.py
 import uuid
 import io
 import base64
