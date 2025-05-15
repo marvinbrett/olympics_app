@@ -14,10 +14,6 @@ app.config.from_object(config_dict.get(env, config_dict['default']))
 # Initialisation des extensions
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-# Hook : création automatique des tables si nécessaire
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 login = LoginManager(app)
 login.login_view = 'auth.login'
