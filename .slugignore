@@ -1,0 +1,7 @@
+tests/
+migrations/
+.github/
+.pytest_cache/
+.coverage
+instance/
+*.zip
