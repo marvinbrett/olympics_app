@@ -1,29 +1,18 @@
-<<<<<<< HEAD
-# environnement virtuel
-venv/
-
-# caches, compilés
-__pycache__/
-*.py[cod]
-
-# bases SQLite
-*.db
-*.sqlite3
-
-# secrets
-.env
-
-# métadonnées macOS
-.DS_Store
-=======
 # Environnement virtuel
 venv/
+.venv/
 
 # Caches Python
 __pycache__/
 *.py[cod]
 
 # Bases de données SQLite
-app.db
+*.db
+*.sqlite3
 instance/app.db
->>>>>>> origin/main
+
+# Fichier d’env variables
+.env
+
+# Métadonnées macOS
+.DS_Store
