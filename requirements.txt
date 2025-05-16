@@ -9,4 +9,4 @@ gunicorn>=20.1
 python-dotenv>=1.0
 email-validator>=1.0
 qrcode>=7.3
-pillow>=11.0
+pillow>=11.0psycopg2-binary==2.9.10
