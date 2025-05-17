@@ -21,3 +21,6 @@
   {% endif %}
 </div>
 {% endblock %}
+
+from sqlalchemy import text
+db.session.execute(text("PRAGMA table_info('user')")).fetchall()
