@@ -158,3 +158,15 @@ def scan():
         order = Order.query.filter_by(final_key=key).first()
         result = 'VALID' if order else 'INVALID'
     return render_template('scan.html', result=result)
+
+@bp.route('/delete_offer/<int:offer_id>', methods=['POST'])
+@login_required
+def delete_offer(offer_id):
+    if not current_user.is_admin:
+        flash("Vous n'avez pas la permission…", "danger")
+        return redirect(url_for('shop.offers'))
+    offer = Offer.query.get_or_404(offer_id)
+    db.session.delete(offer)
+    db.session.commit()
+    flash(f"L'offre « {offer.name} » a été supprimée.", "success")
+    return redirect(url_for('shop.offers'))

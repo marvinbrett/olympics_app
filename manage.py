@@ -20,7 +20,8 @@ def create_admin(username, email, password):
     if User.query.filter_by(username=username).first():
         click.echo(f"Le compte '{username}' existe déjà.")
         return
-    admin = User(username=username, email=email)
+    admin = User( username=username, email=email )
+    admin.is_admin = True
     admin.set_password(password)
     db.session.add(admin)
     db.session.commit()

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Scanner un e-billet – JO France{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Scanner un e-billet</h2>
+  <form method="post" action="{{ url_for('shop.scan') }}">
+    <div class="mb-3">
+      <label for="final_key" class="form-label">Clé finale du billet</label>
+      <input type="text" class="form-control" id="final_key" name="final_key" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Vérifier</button>
+  </form>
+  {% if result is not none %}
+    <div class="mt-4">
+      {% if result == 'VALID' %}
+        <div class="alert alert-success">Billet valide 🎉</div>
+      {% else %}
+        <div class="alert alert-danger">Billet invalide ❌</div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block container_margin %}{% endblock %}
 
-{# 1) On surcharge le bloc hero, juste après la navbar #}
+{# 1) Hero Section - Accueil #}
 {% block hero %}
 <section class="hero text-center text-white d-flex align-items-center"
          style="height: 60vh;
@@ -14,7 +14,42 @@
 </section>
 {% endblock %}
 
+{# 2) Section des Épreuves #}
 {% block content %}
+  <section class="container py-5">
+    <h2 class="text-center mb-4">Épreuves des Jeux Olympiques</h2>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 text-center shadow-sm">
+          <img src="{{ url_for('static', filename='img/athletics.jpg') }}" class="card-img-top" alt="Athlétisme">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Athlétisme</h5>
+            <p class="card-text">Courses, sauts et lancers spectaculaires.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 text-center shadow-sm">
+          <img src="{{ url_for('static', filename='img/swimming.jpg') }}" class="card-img-top" alt="Natation">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Natation</h5>
+            <p class="card-text">Les meilleurs nageurs s'affrontent.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card h-100 text-center shadow-sm">
+          <img src="{{ url_for('static', filename='img/gymnastics.jpg') }}" class="card-img-top" alt="Gymnastique">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Gymnastique</h5>
+            <p class="card-text">Performances acrobatiques impressionnantes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {# 3) Section des Offres #}
   <section class="py-5 bg-light">
     <div class="container">
       <h2 class="mb-4">À la une</h2>
@@ -25,9 +60,7 @@
               <div class="card-body d-flex flex-column">
                 <h5 class="card-title">{{ offer.name }}</h5>
                 <p class="card-text mb-4">€{{ offer.price }}</p>
-                <a href="{{ url_for('shop.offers') }}" class="mt-auto btn btn-primary">
-                  Je découvre
-                </a>
+                <a href="{{ url_for('shop.offers') }}" class="mt-auto btn btn-primary">Je découvre</a>
               </div>
             </div>
           </div>
