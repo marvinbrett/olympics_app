@@ -76,7 +76,7 @@ export FLASK_ENV=development
 flask run --port=5000
 ```
 
-Puis ouvrez `http://127.0.0.1:5002`.
+Puis ouvrez `http://127.0.0.1:5000`.
 
 ## 6. Tests & Lint
 
