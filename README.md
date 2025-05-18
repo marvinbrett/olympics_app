@@ -13,7 +13,7 @@ Les administrateurs peuvent :
 
 * Gérer les offres (CRUD)
 * Suivre les ventes et consulter les statistiques
-* Gérer les utilisateurs (élever en admin, suppression)
+* Gérer les utilisateurs (suppression)
 
 ## 🚀 Fonctionnalités
 
