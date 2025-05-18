@@ -1,95 +1,125 @@
-# JO France - Billetterie Jeux Olympiques
+# JO France - Billetterie des Jeux Olympiques en France
 
-Ce projet est une application Flask de billetterie pour les Jeux Olympiques en France.
+## 📒 Description
 
-## 1. Prérequis
+JO France est une application web de billetterie pour les Jeux Olympiques de 2024 en France. Les utilisateurs peuvent :
 
-- Python 3.9+
-- [pipenv](https://pipenv.pypa.io/) ou `venv`
-- SQLite (par défaut) ou une autre base via `DATABASE_URL`
+* Parcourir et acheter des offres de tickets
+* Gérer leur panier
+* Consulter l'historique de leurs commandes
+* Scanner leurs billets (validation ticket)
 
-## 2. Installation
+Les administrateurs peuvent :
+
+* Gérer les offres (CRUD)
+* Suivre les ventes et consulter les statistiques
+* Gérer les utilisateurs (élever en admin, suppression)
+
+## 🚀 Fonctionnalités
+
+* **Inscription / Connexion** 
+* **Rôles** : utilisateur classique et administrateur
+* **Catalogue** d'offres de billets (nom, prix, capacité)
+* **Panier** : ajout, suppression, validation de commande
+* **Historique de commandes**
+* **Scan QR code** pour validation (interface `/scan`)
+* **Admin Panel** : gestion des offres, ventes, utilisateurs
+
+## 💻 Pré-requis
+
+* Python 3.11+
+* PostgreSQL (en production) ou SQLite (en local)
+* [Poetry](https://python-poetry.org/) ou `pip`
+* Git
+
+## 🔧 Installation locale
 
 ```bash
 # Cloner le dépôt
 git clone https://github.com/marvinbrett/olympics_app.git
 cd olympics_app
 
-# Créer l'environnement virtuel et installer les dépendances
-python3 -m venv venv
-source venv/bin/activate
+# Créer un environnement virtuel
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Installer les dépendances
 pip install -r requirements.txt
-
-# Créer le fichier .env à partir du modèle
-cp .env.example .env
-# Éditez .env pour définir vos clés et URI
-
-# Initialiser la base de données
-export FLASK_APP=manage.py
-flask db upgrade
 ```
 
-## 3. Scripts CLI
+## 🏗️ Configuration
 
-### `flask create-admin`
-
-Permet de créer un compte administrateur via la CLI. Vous serez invité à saisir :
-
-- Nom d’utilisateur (par défaut `admin`)
-- Email (par défaut `admin@example.com`)
-- Mot de passe (masqué, confirmé)
-
-```bash
-export FLASK_APP=manage.py
-flask create-admin
-```
-
-## 4. Variables d’environnement
-
-Placez ces variables dans un fichier `.env` (ou en environnement système) :
+Copiez `.env.example` en `.env` puis configurez :
 
 ```ini
-# Clé Flask
-SECRET_KEY=changeme
-
-# Base de données
-DATABASE_URL=sqlite:///instance/app.db
-
-# SMTP (Flask-Mail)
-MAIL_SERVER=localhost
-MAIL_PORT=8025
-MAIL_USE_TLS=False
-MAIL_USE_SSL=False
-MAIL_USERNAME=
-MAIL_PASSWORD=
-MAIL_DEFAULT_SENDER=noreply@jofrance.com
-
-# Environnement (dev | production)
+FLASK_APP=manage.py
 FLASK_ENV=development
+SECRET_KEY=UneCléSecrèteTrèsLongue
+DATABASE_URL=sqlite:///instance/app.db  # ou PostgreSQL en prod\EMAIL_USER=...
 ```
 
-## 5. Lancement de l’application
+## 🚀 Lancement en local
 
 ```bash
-# Mode développement (avec rechargement)
-export FLASK_ENV=development
-flask run --port=5000
+# Initialiser la base et les migrations
+flask db init           # si premiers déploiement
+flask db migrate -m "Initial migration"
+flask db upgrade
+
+# Lancer le serveur
+gunicorn manage:app --bind 0.0.0.0:5000
+# ou en dev
+flask run
 ```
 
-Puis ouvrez `http://127.0.0.1:5000`.
+## 🔐 Création d’un compte admin
 
-## 6. Tests & Lint
+Dans un shell Flask :
 
-- **Tests unitaires** :
-  ```bash
-  pytest --cov
-  ```
-  Affiche le rapport de couverture.
+```bash
+flask shell
+>>> from app import db
+>>> from app.models import User
+>>> u = User(username='admin', email='admin@example.com')
+>>> u.set_password('secret')
+>>> u.is_admin = True
+>>> db.session.add(u)
+>>> db.session.commit()
+```
 
-- **Lint & formatting** :
-  ```bash
-  black --check .
-  flake8 .
-  ```
+## ☁️ Déploiement sur Render
 
+1. Pousser sur GitHub
+2. Créer un service Python sur Render
+3. Configurer la Build Command :
 
+   ```bash
+   pip install -r requirements.txt && flask db upgrade
+   ```
+4. Configurer la Start Command :
+
+   ```bash
+   gunicorn manage:app --bind 0.0.0.0:$PORT
+   ```
+5. Définir les variables d’environnement dans le dashboard Render
+
+## 📦 Architecture technique
+
+* **Langage** : Python 3.11
+* **Framework** : Flask (Blueprints, Jinja2)
+* **Extensions** :
+
+  * Flask-Login (authentification)
+  * Flask-Migrate (migrations)
+  * Flask-SQLAlchemy (ORM)
+  * Flask-WTF (forms & CSRF)
+* **Base de données** : PostgreSQL (prod) / SQLite (local)
+* **Serveur** : Gunicorn
+* **Stockage statique** : CDN Render
+
+## 🔒 Sécurité
+
+* **SSL/TLS** via Render
+* **Hashing** des mots de passe (Werkzeug)
+* **CSRF** protégé par Flask-WTF
+* **Contrôle d’accès** : rôles utilisateur / admin
